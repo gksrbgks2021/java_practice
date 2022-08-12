@@ -1,17 +1,39 @@
 package day03_lotto;
 
-public class Main {
+import java.io.IOException;
 
+public class Main {
 	public static void main(String[] args) {
-		System.out.println("[lotto 로또 프로그램 (랜덤 번호 생성 및 당첨 확인) - Random(임의)정수값 생성, while(true)로또 번호 저장, for문 당첨 확인 실시]");
+		Main m = new Main();
+		m.menu();
+	}
+
+	public void menu() {
+		boolean flag = true;
+		Person person = new Person();
+		LottoMachine machine = new LottoMachine();
 		
-		String str1 = "hello";
-		String str2 = "hello";
-		String str3 = new String("hello");
-		String str4 = new String("hello");
-		
-		System.out.println(str1== str2);
-		System.out.println(str3== str4);
+		while (flag) {
+			System.out.println("===============");
+			System.out.println("lotto 프로그램\n7 개의 [1..45] 정수를 입력하세요...\n종료하려면 z입력할것.");
+			System.out.println("===============");
+			/*사용자 번호 입력*/
+			try {
+				person.pick();
+			} catch (IOException e) {//입력오류
+				e.printStackTrace();
+			} catch(InputZ z) { //종료
+				flag = false;
+			}
+			/*로또 번호 생성*/
+			machine.initmachine();
+			machine.pick();
+			
+			person.show();
+			machine.show();
+			System.out.printf("총 %d 개 숫자가 일치합니다. ", machine.check(person.getList()));
+			
+		}
 		
 	}
 }
